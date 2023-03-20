@@ -1,4 +1,5 @@
 <html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 .button {
@@ -7,6 +8,7 @@
   color: white;
   padding: 15px 32px;
   text-align: center;
+  font-size:30px;
   width:150px;
   text-decoration: none;
   display: inline-block;
@@ -18,31 +20,25 @@
 
 <body style="text-align:center; background-color:#F7F2D4;">
 
-<h1 style="font-family:helvetica; color:#091D34; margin-top:50px;">24 Common Italian verbs<br>Practice Quiz</h1>
+<div id="main" float:left; style="height:120px; width:100%; font-size:3vw; color:#091D34; margin-top:50px; font-family:helvetica;">
+<h2 style="font-family:helvetica; font-size:5vw; color:#D61A46; margin-top:50px;">24 Common Italian verbs<br>Practice Quiz</h2>
 
-<div style="height:120px; margin-top:50px; font-family:helvetica;">
-<h1 id ="initial"></h1>
-<h1 id="result" style="display:none"></h1>
+<h1 id ="initial" style="font-size:5vw;"></h1>
+<h1 id="result" style="display:none; font-size:5vw;"></h1>
+<p id="result" style="display:none; font-size:5vw;">?</p>
+<button class="button" type="button" onclick="document.getElementById('result').style.display='block'">Answer!</button>
+<button class="button" onClick="window.location.reload();">Next</button>
 </div>
+
 
 <script>
 const verbs = ["Avere, (to have)\n", "(io) ho , I have\n", "(tu) hai , you have\n", "(lui/lei) ha , he / she has\n", "(noi) abbiamo , we have\n", "(voi) avete , you have\n", "(loro) hanno , they have\n", "Essere, (to be)\n", "(io) sono , I am\n", "(tu) sei , you are\n", "(lui/lei) e , he / she is\n", "(noi) siamo , we are\n", "(voi) siete , you are\n", "(loro) sono , they are\n", "Fare, (to do/make)\n", "(io) faccio , I do / make\n", "(tu) fai , you do / make\n", "(lui/lei) fa , he / she does / makes\n", "(noi) facciamo , we do / make\n", "(voi) fate , you do / make\n", "(loro) fanno , they do / make\n", "Andare, (to go)\n", "(io) vado , I go\n", "(tu) vai , you go\n", "(lui/lei) va , he / she goes\n", "(noi) andiamo , we go\n", "(voi) andate , you go\n", "(loro) vanno , they go\n", "Parlare, (to speak /talk)\n", "(io) parlo , I speak / talk\n", "(tu) parli , you speak / talk\n", "(lui/lei) parla , he/she speaks / talks\n", "(noi) parliamo , we speak / talk\n", "(voi) parlate , you speak / talk\n", "(loro) parlano , they speak / talk\n", "Dare, (to give)\n", "(io) do , I give\n", "(tu) dai , you give\n", "(lui/lei) da , he / she gives\n", "(noi) diamo , we give\n", "(voi) date , you give\n", "(loro) danno , they give\n", "Guardare, (to watch / look at)\n", "(io) guardo , I watch/look at\n", "(tu) guardi , you watch / look at\n", "(lui/lei) guarda , he/she watches / looks at\n", "(noi) guardiamo , we watch / look at\n", "(voi) guardate , you watch / look at\n", "(loro) guardano , they watch / look at\n", "Lavare, (to wash)\n", "(io) [mi] lavo , I wash [myself]\n", "(tu) [ti] lavi , you wash [yourself]\n", "(lui/lei) [si] lava , he/she washes [himself/herself]\n", "(noi) [ci] laviamo , we wash [ourselves]\n", "(voi) [vi] lavate , you wash [yourselves]\n", "(loro) [si] lavano , they wash [themselves]\n", "Abitare, (to live/reside)\n", "(io) abito , I live/reside\n", "(tu) abiti , you live/reside\n", "(lui/lei) abita , he/she lives/resides\n", "(noi) abitiamo , we live/reside\n", "(voi) abitate , you live/reside\n", "(loro) abitano , they live/reside\n", "Prendere, (to take/grab/have/catch/get)\n", "(io) prendo , I take\n", "(tu) prendi , you take\n", "(lui/lei) prende , he/she takes\n", "(noi) prendiamo , we take\n", "(voi) prendete , you take\n", "(loro) prendono , they take\n", "Potere, (can/may/be able to)\n", "(io) posso , I can\n", "(tu) puoi , you can\n", "(lui/lei) puo , he/she can\n", "(noi) possiamo , we can\n", "(voi) potete , you can\n", "(loro) possono , they can\n", "Volere, (to want)\n", "(io) voglio , I want\n", "(tu) vuoi , you want\n", "(lui/lei) vuole , he/she wants\n", "(noi) vogliamo , we want\n", "(voi) volete , you want\n", "(loro) vogliono , they want\n", "Dovere, (must/have to/owe)\n", "(io) devo , I must/have to/owe\n", "(tu) devi , you must/have to/owe\n", "(lui/lei) deve , he/she must/has to/owes\n", "(noi) dobbiamo , we must/have to/owe\n", "(voi) dovete , you must/have to/owe\n", "(loro) devono , they must/have to/owe\n", "Sapere, (to know/be aware of)\n", "(io) so , I know\n", "(tu) sai , you know\n", "(lui/lei) sa , he/she knows\n", "(noi) sappiamo , we know\n", "(voi) sapete , you know\n", "(loro) sanno , they know\n", "Conoscere, (to know/be acquainted with)\n", "(io) conosco , I know\n", "(tu) conosci , you know\n", "(lui/lei) conosce , he/she knows\n", "(noi) conosciamo , we know\n", "(voi) conoscete , you know\n", "(loro) conoscono , they know\n", "Vedere, (to see)\n", "(io) vedo , I see\n", "(tu) vedi , you see\n", "(lui/lei) vede , he/she sees\n", "(noi) vediamo , we see\n", "(voi) vedete , you see\n", "(loro) vedono , they see\n", "Mettere, (to put)\n", "(io) metto , I put\n", "(tu) metti , you put\n", "(lui/lei) mette , he/she puts\n", "(noi) mettiamo , we put\n", "(voi) mettete , you put\n", "(loro) mettono , they put\n", "Uscire, (to exit/go out)\n", "(io) esco , I exit/go out\n", "(tu) esci , you exit/go out\n", "(lui/lei) esce , he/she exits/goes out\n", "(noi) usciamo , we exit/go out\n", "(voi) uscite , you exit/go out\n", "(loro) escono , they exit/go out\n", "Dire, (to say/tell)\n", "(io) dico , I say/tell\n", "(tu) dici , you say/tell\n", "(lui/lei) dice , he/she says/tells\n", "(noi) diciamo , we say/tell\n", "(voi) dite , you say/tell\n", "(loro) dicono , they say/tell\n", "Capire, (to understand)\n", "(io) capisco , I understand\n", "(tu) capisci , you understand\n", "(lui/lei) capisce , he/she understands\n", "(noi) capiamo , we understand\n", "(voi) capite , you understand\n", "(loro) capiscono , they understand\n", "Sentire, (to hear/feel/smell/taste)\n", "(io) sento , I hear/feel/smell/taste\n", "(tu) senti , you hear/feel/smell/taste\n", "(lui/lei) sente , he/she hears/feels/smells/tastes\n", "(noi) sentiamo , we hear/feel/smell/taste\n", "(voi) sentite , you hear/feel/smell/taste\n", "(loro) sentono , you hear/feel/smell/taste\n", "Venire, (to come)\n", "(io) vengo , I come\n", "(tu) vieni , you come\n", "(lui/lei) viene , he/she comes\n", "(noi) veniamo , we come\n", "(voi) venite , you come\n", "(loro) vengono , they come\n", "Finire, (to end/finish)\n", "(io) finisco , I finish\n", "(tu) finisci , you finish\n", "(lui/lei) finisce , he/she finishes\n", "(noi) finiamo , we finish\n", "(voi) finite , you finish\n", "(loro) finiscono , they finish\n"];
-
 let length = verbs.length;
 let x = Math.floor((Math.random() * length) + 1);
-
 const a = verbs[x].split(",");
-
 document.getElementById("initial").innerHTML = a[0];
 document.getElementById("result").innerHTML = a[1];
-
 </script>
-
-<p id="result" style="display:none">2nd statement Here</p>
-
-<button class="button" type="button" onclick="document.getElementById('result').style.display='block'">Answer!</button>
-
-<button class="button" onClick="window.location.reload();">Next</button>
 
 </body>
 
